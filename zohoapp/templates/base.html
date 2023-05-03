@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <link rel="stylesheet" href="static/fonts/icomoon/style.css">
     <!-- <link rel="stylesheet" href="static/css/owl.carousel.min.css">
@@ -20,8 +21,13 @@
     <script src="https://kit.fontawesome.com/3b9793c077.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     <title>Zoho Django</title>
     <style>
+.rotate-icon .fa-angle-right {
+  transform: rotate(90deg);
+}
+
 .active{
   color: #ccc;
 }
@@ -11340,6 +11346,7 @@ transition: transform 0.4s ,top 0.4s;
 
 }
 
+
 </style>
 </head>
 <body>
@@ -11412,8 +11419,21 @@ transition: transform 0.4s ,top 0.4s;
            <h6 class="mb-4"><a class="active  " href="{% url 'itemview' %}"><i class="fa-solid fa-sitemap mr-3 "></i>Items</a> <a class="ml-5 active" href="{% url 'additem' %}"><i class="fa-solid fa-plus "></i></a></h6>
            <h6 class="mb-4"><a class="active  " href="#"><i class="fa-solid fa-building-columns mr-3"></i>Banking</a> <a class="ml-5 active" href="{% url 'additem' %}"><i class="fa-solid fa-plus "></i></a></h6>
            <h6 class="mb-4"><a class="active  " href="#"><i class="fa-solid fa-cart-shopping mr-3"></i>Sales</a></h6>
-           <h6 class="mb-4"><a class="active  " href="#"><i class="fa-solid fa-basket-shopping mr-3"></i>Purchases</a></h6>
-           <h6 class="mb-4"><a class="active  " href="#"><i class="fa-solid fa-business-time mr-3 "></i>Time Tracking</a></h6>
+           <div class="menu-item">
+            <h6 class="mb-4" onclick="toggleSubitems()">
+              <a class="active" href="#">
+                <i class="fa-solid fa-basket-shopping mr-3"></i> Purchase
+                <i class="fas fa-angle-right ms-2"></i>
+              </a>
+            </h6>
+            <div id="sub-items" >
+              <ul>
+                <li style="list-style: none;"><a href="#" style="color: white;">Expense</a><a class="ml-5 active" href=""><i class="fa-solid fa-plus "></i></a></h6></li>
+              </ul>
+            </div>
+          </div>
+          
+            <h6 class="mb-4"><a class="active  " href="#"><i class="fa-solid fa-business-time mr-3 "></i>Time Tracking</a></h6>
             <h6 class="mb-4"><a class="active  " href="#"><i class="fa-solid fa-user mr-3 "></i>Accountant</a></h6>
             <h6 class="mb-4"><a class="active  " href="#"><i class="fa-solid fa-calendar-week mr-3"></i>Reports</a></h6>
             <h6 class="mb-4"><a class="active  " href="#"><i class="fa-solid fa-file mr-3"></i>Documents</a></h6>
@@ -11429,7 +11449,26 @@ transition: transform 0.4s ,top 0.4s;
       {% endblock %}
     
     {% endif %}
-    
-    
+<script>
+
+function toggleSubitems() {
+  var subitems = document.getElementById("sub-items");
+  if (subitems.style.display === "none") {
+    subitems.style.display = "block";
+    var arrowIcon = document.querySelector(".menu-item h6 a i:last-child");
+    arrowIcon.classList.remove("fa-angle-right");
+    arrowIcon.classList.add("fa-angle-down");
+  } else {
+    subitems.style.display = "none";
+    var arrowIcon = document.querySelector(".menu-item h6 a i:last-child");
+    arrowIcon.classList.remove("fa-angle-down");
+    arrowIcon.classList.add("fa-angle-right");
+  }
+}
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
