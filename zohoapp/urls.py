@@ -20,5 +20,7 @@ urlpatterns = [
     path('cleer/<int:id>',views.cleer,name='cleer'),
     path('add_unit',views.add_unit,name='add_unit'),
     path('sales',views.add_sales,name='add_sales'),
+    path('expensepage',views.expensepage,name='expensepage'),
+    path('save_expense',views.save_expense,name='save_expense'),
     
 ]

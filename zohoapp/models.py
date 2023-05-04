@@ -72,3 +72,21 @@ class History(models.Model):
     message=models.CharField(max_length=255)
     p=models.ForeignKey(AddItem,on_delete=models.CASCADE)
 
+class Expense(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    expense_account=models.TextField(max_length=255)
+    amount=models.TextField(max_length=255)
+    expense_type=models.TextField(max_length=255)
+    paid=models.TextField(max_length=255)
+    vendor=models.TextField(max_length=255)
+    notes=models.TextField(max_length=255)
+    hsn_code=models.TextField(max_length=255)
+    gst_treatment =models.TextField(max_length=255)
+    destination_of_supply=models.TextField(max_length=255)
+    reverse_charge=models.TextField(max_length=255)
+    tax=models.TextField(max_length=255)
+    invoice=models.TextField(max_length=255)
+    customer_name=models.TextField(max_length=255)
+    reporting_tags=models.TextField(max_length=255)
+    date = models.DateField()
+

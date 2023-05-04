@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{%load static%}
+{% block content %}
+
+<div class="container" style="padding-left: 20%;">
+  <h1>Add Expense</h1>
+  <form method="POST" action="{%url 'save_expense'%}">
+    {% csrf_token %}
+    <div class="form-group row">
+      <label for="date" class="col-sm-2 col-form-label">Date</label>
+      <div class="col-sm-10">
+        <input type="date" class="form-control" id="date" name="date">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="expense_account" class="col-sm-2 col-form-label">Expense Account</label>
+      <div class="col-sm-10">
+        <select class="form-control select2" id="expense_account" name="expense_account">
+          {% for account in expense_accounts %}
+            <option value="{{ account }}">{{ account }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="expense_type" class="col-sm-2 col-form-label">Expense Type</label>
+      <div class="col-sm-10">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="expense_type" id="goods" value="goods">
+          <label class="form-check-label" for="goods">Goods</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="expense-type" id="services" value="services">
+          <label class="form-check-label" for="services">Services</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="hsn_code" class="col-sm-2 col-form-label">HSN Code</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="hsn_code" name="hsn_code">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="notes" class="col-sm-2 col-form-label">Notes</label>
+      <div class="col-sm-10">
+        <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="amount" class="col-sm-2 col-form-label">Amount</label>
+      <div class="col-sm-10">
+        <input type="number" class="form-control" id="amount" name="amount">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="paid_through" class="col-sm-2 col-form-label">Paid Through</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="paid_through" name="paid_through">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="vendor" class="col-sm-2 col-form-label">Vendor</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="vendor" name="vendor">
+      </div>
+    </div>
+    <div class="col-sm-10 offset-sm-2">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form> 
+{%endblock%}

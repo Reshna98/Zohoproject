@@ -346,3 +346,48 @@ def add_sales(request):
         return redirect('additem')
     return render(request,'additem.html')
 
+def expensepage(request):
+    return render(request,'expense.html')
+
+
+def save_expense(request):
+    if request.method == 'POST':
+        date = request.POST.get('date')
+        expense_account = request.POST.get('expense_account')
+        amount = request.POST.get('amount')
+        expense_type = request.POST.get('expense_type')
+        paid = request.POST.get('paid')
+        vendor = request.POST.get('vendor')
+        notes = request.POST.get('notes')
+        hsn_code = request.POST.get('hsn_code')
+        gst_treatment = request.POST.get('gst_treatment')
+        destination_of_supply = request.POST.get('destination_of_supply')
+        reverse_charge = request.POST.get('reverse_charge')
+        tax = request.POST.get('tax')
+        invoice = request.POST.get('invoice')
+        customer_name = request.POST.get('customer_name')
+        reporting_tags = request.POST.get('reporting_tags')
+        
+        expense = Expense.objects.create(
+            user=request.user,
+            date=date,
+            expense_account=expense_account,
+            amount=amount,
+            expense_type=expense_type,
+            paid=paid,
+            vendor=vendor,
+            notes=notes,
+            hsn_code=hsn_code,
+            gst_treatment=gst_treatment,
+            destination_of_supply=destination_of_supply,
+            reverse_charge=reverse_charge,
+            tax=tax,
+            invoice=invoice,
+            customer_name=customer_name,
+            reporting_tags=reporting_tags
+        )
+        expense.save()
+        return redirect('expensepage')  
+    
+    return render(request, 'addexpense.html') 
+
