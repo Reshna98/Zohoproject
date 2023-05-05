@@ -1,10 +1,18 @@
 {% extends 'base.html' %}
 {%load static%}
 {% block content %}
-
-<div class="container" style="padding-left: 20%;">
-  <h1>Add Expense</h1>
-  <form method="POST" action="{%url 'save_expense'%}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+<style>
+.form-group{
+  width: 40%;
+}
+</style>
+<div class="row fixed-top" style="top: 7rem;margin-left: 14rem;">
+<div class="col-md-10">
+  <div style="height: 400px; width:1100px; overflow-y: scroll;padding-left: 10%;">
+  <h1> Add Expense</h1>
+  <form method="POST" action="{%url 'save_expense'%}" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="form-group row">
       <label for="date" class="col-sm-2 col-form-label">Date</label>
@@ -12,29 +20,28 @@
         <input type="date" class="form-control" id="date" name="date">
       </div>
     </div>
-    <div class="form-group row">
-      <label for="expense_account" class="col-sm-2 col-form-label">Expense Account</label>
+    <!-- <div class="form-group row">
+      <label for="expense_account"class="col-sm-2 col-form-label">Expense Account</label>
       <div class="col-sm-10">
-        <select class="form-control select2" id="expense_account" name="expense_account">
-          {% for account in expense_accounts %}
-            <option value="{{ account }}">{{ account }}</option>
-          {% endfor %}
-        </select>
-      </div>
+      <select id="expense_account" name="expense_account" class="form-control select2" style="width: 100%;">
+        <option value="">-- Select Expense Account --</option>
+        <option value="1">Expense Account 1</option>
+        <option value="2">Expense Account 2</option>
+        <option value="3">Expense Account 3</option>
+      </select>
+    </div></div>
+   -->
+   <div class="form-group row">
+    <label for="expense_account" class="col-sm-2 col-form-label">Expense Account</label>
+    <div class="col-sm-10">
+      <select id="expense_account" name="expense_account" class="form-control">
+        <option value="">-- Select Expense Account --</option>
+        <option value="1">Expense Account 1</option>
+        <option value="2">Expense Account 2</option>
+        <option value="3">Expense Account 3</option>
+      </select>
     </div>
-    <div class="form-group row">
-      <label for="expense_type" class="col-sm-2 col-form-label">Expense Type</label>
-      <div class="col-sm-10">
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="expense_type" id="goods" value="goods">
-          <label class="form-check-label" for="goods">Goods</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="expense-type" id="services" value="services">
-          <label class="form-check-label" for="services">Services</label>
-        </div>
-      </div>
-    </div>
+  </div>
     <div class="form-group row">
       <label for="hsn_code" class="col-sm-2 col-form-label">HSN Code</label>
       <div class="col-sm-10">
@@ -54,9 +61,9 @@
       </div>
     </div>
     <div class="form-group row">
-      <label for="paid_through" class="col-sm-2 col-form-label">Paid Through</label>
+      <label for="paid" class="col-sm-2 col-form-label">Paid Through</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="paid_through" name="paid_through">
+        <input type="text" class="form-control" id="paid" name="paid">
       </div>
     </div>
     <div class="form-group row">
@@ -65,8 +72,30 @@
         <input type="text" class="form-control" id="vendor" name="vendor">
       </div>
     </div>
+    <div class="form-group row">
+      <label for="reporting_tags" class="col-sm-2 col-form-label">Reporting tags</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="reporting_tags" name="reporting_tags">
+      </div>
+    </div>
     <div class="col-sm-10 offset-sm-2">
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>
+  </div>
+  </div>
 </form> 
+</section>
+<script>
+$(document).ready(function() {
+  $('#expense_account').select2({
+    placeholder: "",
+    allowClear: true,
+    dropdownAutoWidth: true,
+    dropdownParent: $("#expense_account").parent(),
+    dropdownPosition: "above"
+  });
+});
+</script>
+
 {%endblock%}
+

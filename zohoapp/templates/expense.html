@@ -1,46 +1,68 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<section >
-    <div class="row fixed-top  " style="top: 7rem; margin-left: 18rem;" >
-     
-      <div class="col-md-10 " style=" position: fixed;">
-          <div class="row">
-              <div class="col-md-3"><a class="text-white" style="font-size: 2rem;">All Expenses</a></div>
-              <div class="col-md-6 form-inline" style="margin-left: 55rem;margin-top: -2rem;"><a style="color: #ccc;" class="btn btn-success mr-2" href="{%url 'save_expense'%}"><i class="fa-solid fa-plus "></i>New</a>
-                <a style="color: #ccc;"href="#3">      
-                
+<style>
+ .blue-color{
+ color: blue;
+  }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/bootstrap-icons.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/bootstrap-icons.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"> 
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<div class="row fixed-top" style="top: 7rem;margin-left: 14rem;">
+  <div class="col-md-10">
+    <div style="height: 400px; width:1100px; overflow-y: scroll;padding-left: 10%;">
+    <h1> Add Expense</h1>
+    <div class="col-md-6 form-inline" style="margin-left: 20rem;margin-top: -2rem;padding-left: 20%;"><a style="color: #ccc;" class="btn btn-success mr-2" href="{%url 'save_expense'%}"><i class="fa-solid fa-plus "></i>New</a></div>
+          <a style="color: #ccc;"href="#3">
+            <section style="margin-left: 30%; padding-top: 10%;">    
+            <div class="card" style="width: 24rem; height: 15rem;">
+              <div class="card-body">
+                <h5 class="card-title" style="color: black;">ZOHO</h5>
+                <p class="card-text"style="color: black;">How to record and manage expenses</p><br>
+                <a href="#" class="btn btn-dark play-icon" style="margin-left: 35%;"><i class="fa fa-youtube-play" style="font-size:48px;color:red"></i></a>
               </div>
-            </div>   
-            <table class="table  text-white">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Expense Account</th>
-                  <th>Expense Type</th>
-                  <th>Vendor</th>
-                  <th>Paid Through</th>
-                  <th>Customer</th>
-                  <th>Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-               
-       
-                <tr>
-       
-            
-                 
-                </tr>
-                
-              </tbody>
-            </table>
-        
-  
-             
-             </div>
-  
-      </div>
+            </div>
+            <div style="color: white;"><h4>Time To Manage Your Expenses!</h4>
+            <p>Create and manage expenses that are part of your organization’s operating costs.</p></div>
+            <a href="{%url 'save_expense'%}" class="btn btn-primary">Record Expenses</a>
+            </section>
+     
+      </section>
+          <section>
+            <h4 style="margin-top: 10%;text-align: center;">Life cycle of an Expense</h4><br>
+            <img src="https://www.zoho.com/books/accounting-software-demo//assets/images/1x/expense-workflow.png">
+          </section>
+          <section style="margin-top: 10%; color: white;padding-left: 20%;">
+           <h4>In the Expenses section, you can:</h4>
+           <span class="bi bi-check-circle blue-color"></span>Record a single expense or record expenses in bulk.<br>
+           <span class="bi bi-check-circle blue-color"></span> Set mileage rates and record expenses based on the distance travelled.<br>
+           <span class="bi bi-check-circle blue-color"></span>Convert an expense into an invoice to get it reimbursed.
+          </section>
+         
+
     </div>
-   
+    </div>
+    </div>
+    </div>
+  <script>
+
+  $(document).ready(function() {
+    $('.play-icon').click(function(e) {
+      e.preventDefault();
+      $(this).closest('.card').replaceWith('<div class="card embed-responsive embed-responsive-16by9" style="width: 24rem; height=15rem;"><iframe class="card-img-top embed-responsive-item" width="640" height="360" src="https://www.youtube.com/embed/g-hwH6r6dMo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>');
+    });
+  });
+
+
+</script>
+
+
+       
+
 {%endblock%}
