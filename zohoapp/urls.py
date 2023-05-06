@@ -22,5 +22,6 @@ urlpatterns = [
     path('sales',views.add_sales,name='add_sales'),
     path('expensepage',views.expensepage,name='expensepage'),
     path('save_expense',views.save_expense,name='save_expense'),
+    path('add_accountE',views.add_accountE,name='add_accountE'),
     
 ]
