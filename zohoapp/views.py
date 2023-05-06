@@ -410,4 +410,8 @@ def add_accountE(request):
         return render(request, 'addexpense.html', context)
 
     else:
+<<<<<<< HEAD
+=======
+      
+>>>>>>> 58810ef6669728813ad624632adfc8e6fb6a423c
         return render(request, 'addexpense.html')
