@@ -398,15 +398,10 @@ def add_accountE(request):
         code = request.POST.get('code')
         pname = request.POST.get('pname')
         description=request.POST.get('description')
-        # Create a new Account object
         new_account = Account(type=type,name=name,code=code,pname=pname,description=description)
         new_account.save()
-
-        # Get all the account types and names to update the dropdown list
         account_types = Account.objects.values_list('type',flat=True).distinct()
         accounts = Account.objects.all()
-
-        # Pass the updated account types and accounts to the template
         context = {
             'account_types': account_types,
             'accounts': accounts,
@@ -415,5 +410,5 @@ def add_accountE(request):
         return render(request, 'addexpense.html', context)
 
     else:
-        # If the request method is GET, display the form
+      
         return render(request, 'addexpense.html')
