@@ -359,20 +359,28 @@ def save_expense(request):
         paid = request.POST.get('paid')
         vendor = request.POST.get('vendor')
         notes = request.POST.get('notes')
-        hsn_code = request.POST.get('hsn_code')
+        if request.POST.get('expense_type') == 'goods':
+            hsn_code = request.POST.get('sac')
+            sac = request.POST.get('hsn_code')
+        else:
+            hsn_code = request.POST.get('hsn_code')
+            sac = request.POST.get('sac')
+
         gst_treatment = request.POST.get('gst_treatment')
         destination_of_supply = request.POST.get('destination_of_supply')
-        reverse_charge = request.POST.get('reverse_charge')
+        reverse_charge = request.POST.get('reverse_charge',False)
         tax = request.POST.get('tax')
         invoice = request.POST.get('invoice')
         customer_name = request.POST.get('customer_name')
         reporting_tags = request.POST.get('reporting_tags')
-        
+        taxamt=request.POST.get('taxamt',False)
         expense = Expense.objects.create(
             user=request.user,
             date=date,
             expense_account=expense_account,
             amount=amount,
+            taxamt=taxamt,
+            sac=sac,
             expense_type=expense_type,
             paid=paid,
             vendor=vendor,
@@ -410,8 +418,4 @@ def add_accountE(request):
         return render(request, 'addexpense.html', context)
 
     else:
-<<<<<<< HEAD
-=======
-      
->>>>>>> 58810ef6669728813ad624632adfc8e6fb6a423c
         return render(request, 'addexpense.html')

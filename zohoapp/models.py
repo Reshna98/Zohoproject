@@ -89,10 +89,11 @@ class Expense(models.Model):
     customer_name=models.TextField(max_length=255)
     reporting_tags=models.TextField(max_length=255)
     date = models.DateField()
-
+    sac=models.TextField(max_length=255)
+    taxamt=models.TextField(max_length=255)
 class Account(models.Model):
-    name = models.CharField(max_length=50)
-    pname = models.CharField(max_length=50)
-    code = models.CharField(max_length=10)
-    type = models.CharField(max_length=50)
-    description = models.TextField(blank=True)
+    name=models.CharField(max_length=50)
+    pname=models.CharField(max_length=50)
+    code=models.CharField(max_length=10)
+    type=models.CharField(max_length=50)
+    description=models.TextField(blank=True)
