@@ -347,7 +347,11 @@ def add_sales(request):
     return render(request,'additem.html')
 
 def expensepage(request):
-    return render(request,'expense.html')
+    expenses = Expense.objects.filter(user=request.user)
+    context = {
+        'expenses': expenses,
+       }
+    return render(request,'expense.html',context)
 
 
 def save_expense(request):
@@ -419,3 +423,13 @@ def add_accountE(request):
 
     else:
         return render(request, 'addexpense.html')
+
+def expense_details(request,pk):
+    expense= Expense.objects.get(id=pk)
+    context = {
+        'expense': expense,
+    }
+    return render(request, 'expenseview.html', context)
+
+
+

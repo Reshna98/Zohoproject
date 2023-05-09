@@ -39,64 +39,64 @@
         <select id="expense_account" name="expense_account" class="form-control select2">
           <option value="">-- Select Expense Account --</option>
           <optgroup label="Other current asset">
-            <option value="1">Advance tax</option>
-            <option value="2">Employee advance</option>
-            <option value="3">Prepaid Expenses</option>
-            <option value="4">GST TCS Receivable</option>
-            <option value="5">GST TDS Receivable</option>
-            <option Value="6">Input TAX Credits</option>
+            <option value="Advance tax">Advance tax</option>
+            <option value="Employee advance">Employee advance</option>
+            <option value="Prepaid Expenses">Prepaid Expenses</option>
+            <option value="GST TCS Receivable">GST TCS Receivable</option>
+            <option value="GST TDS Receivable">GST TDS Receivable</option>
+            <option Value="Input TAX Credits">Input TAX Credits</option>
             <ul style="margin-left: 30px;">
-              <li><option value="7">Input CGST</option></li>
-              <li><option value="8">Input IGST</option></li>
-              <li><option value="9">Input SGST</option></li>
+              <li><option value="Input CGST">Input CGST</option></li>
+              <li><option value="Input IGST">Input IGST</option></li>
+              <li><option value="Input SGST">Input SGST</option></li>
             </ul>
-            <option value="10">Reverse charge tax input but not due</option>
-            <option value="11">sales to customers(cash)</option>
-            <option Value="12">TDS Receivable</option>
+            <option value="Reverse charge tax input but not due">Reverse charge tax input but not due</option>
+            <option value="sales to customers(cash)">sales to customers(cash)</option>
+            <option Value="TDS Receivable">TDS Receivable</option>
           </optgroup>
           <optgroup label="Expense">
-            <option value="13">Advertising and marketing</option>
-            <option value="14">Automobile expense</option>
-            <option value="15">Bad Debt</option>
-            <option value="16">Bank fees and charges</option>
-            <option value="17">Consultant expense</option>
-            <option value="18">Credit card charges</option>
-            <option value="19">Depreciation expense</option>
-            <option value="20">IT and Internet expenses</option>
-            <option value="21">Janitorial Expense</option>
-            <option value="22">Lodging</option>
-            <option value="23">Meals and Entertaiment</option>
-            <option value="24">Office suppplies</option>
-            <option value="25">Other Expenses</option>
-            <option value="26">Postage</option>
-            <option value="27">Printing and stationary</option>
-            <option value="28">Rent expense</option>
-            <option value="29">Repairs and maintenance</option>
-            <option value="30">Salaries and Employee wages</option>
-            <option value="31">Telephone Expense</option>
-            <option value="32">Travel Expense</option>
-            <option value="33">Uncategorized</option>
-            <option value="34">Contract assets</option>
-            <option value="35">Depreciation and amortisation</option>
-            <option value="35">Merchandise</option>
-            <option value="35">Row materials and Consumables</option>
-            <option value="35">Transportation </option>
+            <option value="Advertising and marketing">Advertising and marketing</option>
+            <option value="Automobile expense">Automobile expense</option>
+            <option value="Bad Debt">Bad Debt</option>
+            <option value="Bank fees and charges">Bank fees and charges</option>
+            <option value="Consultant expense">Consultant expense</option>
+            <option value="Credit card charges">Credit card charges</option>
+            <option value="Depreciation expense">Depreciation expense</option>
+            <option value="IT and Internet expenses">IT and Internet expenses</option>
+            <option value="Janitorial Expense">Janitorial Expense</option>
+            <option value="Lodging">Lodging</option>
+            <option value="Meals and Entertaiment">Meals and Entertaiment</option>
+            <option value="Office suppplies">Office suppplies</option>
+            <option value="Other Expenses">Other Expenses</option>
+            <option value="Postage">Postage</option>
+            <option value="Printing and stationary">Printing and stationary</option>
+            <option value="Rent expense">Rent expense</option>
+            <option value="Repairs and maintenance">Repairs and maintenance</option>
+            <option value="Salaries and Employee wages">Salaries and Employee wages</option>
+            <option value="Telephone Expense">Telephone Expense</option>
+            <option value="Travel Expense">Travel Expense</option>
+            <option value="Uncategorized">Uncategorized</option>
+            <option value="Contract assets">Contract assets</option>
+            <option value="Depreciation and amortisation">Depreciation and amortisation</option>
+            <option value="Merchandise">Merchandise</option>
+            <option value="Row materials and Consumables">Row materials and Consumables</option>
+            <option value="Transportation">Transportation </option>
           </optgroup>
           <optgroup label="Other current liability">
-            <option value="36">Employee reimbursements</option>
-            <option value="37">Opening balance adjustments</option>
-            <option value="38">Tax payable</option>
-            <option value="39">Unearned Revenue</option>
-            <option value="40">GST Payable</option>
+            <option value="Employee reimbursements">Employee reimbursements</option>
+            <option value="Opening balance adjustments">Opening balance adjustments</option>
+            <option value="Tax payable">Tax payable</option>
+            <option value="Unearned Revenue">Unearned Revenue</option>
+            <option value="GST Payable">GST Payable</option>
             <ul style="margin-left: 30px;">
-              <li><option value="41">Output CGST</option></li>
-              <li><option value="42">Output IGST</option></li>
-              <li><option value="43">Output SGST</option></li>
+              <li><option value="Output CGST">Output CGST</option></li>
+              <li><option value="Output IGST">Output IGST</option></li>
+              <li><option value="Output SGST">Output SGST</option></li>
             </ul>
             <option value="45">TDS Payable</option>
           </optgroup>
           <optgroup label="Fixed asset">
-            <option value="46">Furniture and equipments</option>
+            <option value="Furniture and equipments">Furniture and equipments</option>
           </optgroup>
           {% for account in accounts %}
           <option value="{{ account.id }}">{{ account.name }}</option>
@@ -241,14 +241,15 @@
       <div class="col-sm-10">
         <select class="form-control select2" id="gst_treatment" name="gst_treatment">
           <option value="">-- Select GST Treatment --</option>
-          <option value="Registered-busi">Registered business-
+          <option value="Registered business-
+          Regular Bussiness that is registered under gst">Registered business-
             Regular Bussiness that is registered under gst</option>
-          <option value="REG_busi-com">Registered business-Composition Bussiness that is registered under the composition scheme in gst</option>
-          <option value="unreg-bus">Unregistered Business- Business that has not been registered under gst  </option>
-          <option value="consumer">Consumer- a customer who is a regular consumer</option>
-          <option value="overseas">Overseas- Persons with whom you do import or export of supplies outside india </option>
-          <option value="special economics zone">Business(unit)-That is located in a special economic zone(SEZ) of india or a SEZ Developer</option>
-          <option value="Deemed Export">Notified list of goods manufactured and supplied within india classified as deemed export</option>
+          <option value="Registered business-Composition Bussiness that is registered under the composition scheme in gst">Registered business-Composition Bussiness that is registered under the composition scheme in gst</option>
+          <option value="Unregistered Business- Business that has not been registered under gst ">Unregistered Business- Business that has not been registered under gst  </option>
+          <option value="Consumer- a customer who is a regular consumer">Consumer- a customer who is a regular consumer</option>
+          <option value="Overseas- Persons with whom you do import or export of supplies outside india ">Overseas- Persons with whom you do import or export of supplies outside india </option>
+          <option value="Business(unit)-That is located in a special economic zone(SEZ) of india or a SEZ Developer">Business(unit)-That is located in a special economic zone(SEZ) of india or a SEZ Developer</option>
+          <option value="Notified list of goods manufactured and supplied within india classified as deemed export">Notified list of goods manufactured and supplied within india classified as deemed export</option>
         </select>
       </div>
     </div>
@@ -317,7 +318,7 @@
     <div class="form-group row">
       <label for="tax" class="col-sm-2 col-form-label">Tax</label>
       <div class="col-sm-10">
-        <select class="form-control select2" id="paid" name="paid">
+        <select class="form-control select2" id="tax" name="tax">
           <option value="">-- Select Tax --</option>
           <option value="">Non-Taxable</option>
           <optgroup label="Taxes">
@@ -352,6 +353,7 @@
         </select>
       </div>
     </div>
+
     
     <!-- <div class="form-group row">
       <label for="reporting_tags" class="col-sm-2 col-form-label">Reporting tags</label>
@@ -367,8 +369,6 @@
         <a href="#" class="associate-tag-link" data-toggle="modal" data-target="#associate-tag-modal"> + Associate Tag</a>
       </div>
     </div>
-    
-    <!-- Modal -->
     <div class="modal fade" id="associate-tag-modal" tabindex="-1" role="dialog" aria-labelledby="associate-tag-modal-label" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -500,7 +500,7 @@
          popup.classList.remove("open-popup");
      }
 
-   </script>
+   </script> 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script>

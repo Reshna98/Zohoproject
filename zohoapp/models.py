@@ -87,7 +87,7 @@ class Expense(models.Model):
     tax=models.TextField(max_length=255)
     invoice=models.TextField(max_length=255)
     customer_name=models.TextField(max_length=255)
-    reporting_tags=models.TextField(max_length=255)
+    reporting_tags=models.TextField(max_length=255,null=True, blank=True)
     date = models.DateField()
     sac=models.TextField(max_length=255)
     taxamt=models.TextField(max_length=255)
