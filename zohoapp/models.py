@@ -71,14 +71,19 @@ class History(models.Model):
     date=models.DateTimeField(auto_now=True)
     message=models.CharField(max_length=255)
     p=models.ForeignKey(AddItem,on_delete=models.CASCADE)
-
+class Account(models.Model):
+    name=models.CharField(max_length=255)
+    pname=models.CharField(max_length=255)
+    code=models.CharField(max_length=255)
+    type=models.CharField(max_length=255)
+    description=models.TextField(blank=True)
 class Expense(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
-    expense_account=models.TextField(max_length=255)
+    expense_account=models.ForeignKey(Account,on_delete=models.CASCADE)
     amount=models.TextField(max_length=255)
     expense_type=models.TextField(max_length=255)
     paid=models.TextField(max_length=255)
-    vendor=models.TextField(max_length=255)
+    vendor=models.TextField(max_length=255)#ForeignKey
     notes=models.TextField(max_length=255)
     hsn_code=models.TextField(max_length=255)
     gst_treatment =models.TextField(max_length=255)
@@ -86,14 +91,8 @@ class Expense(models.Model):
     reverse_charge=models.TextField(max_length=255)
     tax=models.TextField(max_length=255)
     invoice=models.TextField(max_length=255)
-    customer_name=models.TextField(max_length=255)
-    reporting_tags=models.TextField(max_length=255,null=True, blank=True)
+    customer_name=models.TextField(max_length=255)#ForeignKey
+    reporting_tags=models.TextField(max_length=255,null=True, blank=True)#ForeignKey
     date = models.DateField()
     sac=models.TextField(max_length=255)
     taxamt=models.TextField(max_length=255)
-class Account(models.Model):
-    name=models.CharField(max_length=50)
-    pname=models.CharField(max_length=50)
-    code=models.CharField(max_length=10)
-    type=models.CharField(max_length=50)
-    description=models.TextField(blank=True)

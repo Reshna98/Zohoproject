@@ -412,24 +412,57 @@ def add_accountE(request):
         description=request.POST.get('description')
         new_account = Account(type=type,name=name,code=code,pname=pname,description=description)
         new_account.save()
-        account_types = Account.objects.values_list('type',flat=True).distinct()
-        accounts = Account.objects.all()
-        context = {
-            'account_types': account_types,
-            'accounts': accounts,
-        }
+        return redirect("save_expense")
+        
+    return render(request,'addexpense.html')
 
-        return render(request, 'addexpense.html', context)
+def expense_details(request, pk):
+    user = request.user
+    expense=Expense.objects.all()
+    expense_account=Expense.objects.get(id=pk)
+    context = {
+        'expenses': expense,
+        'expense': expense_account,
+    }
+    return render(request, 'expenseview.html', context)
 
-    else:
-        return render(request, 'addexpense.html')
+def edit_expense(request, pk):
+    expense = Expense.objects.get(id=pk)
 
-def expense_details(request,pk):
-    expense= Expense.objects.get(id=pk)
+    if request.method == 'POST':
+        expense.date = request.POST.get('date')
+        expense.expense_account = request.POST.get('expense_account')
+        expense.amount = request.POST.get('amount')
+        expense.expense_type = request.POST.get('expense_type')
+        expense.paid = request.POST.get('paid')
+        expense.vendor = request.POST.get('vendor')
+        expense.notes = request.POST.get('notes')
+        
+        if request.POST.get('expense_type') == 'goods':
+            expense.hsn_code = request.POST.get('sac')
+            expense.sac = request.POST.get('hsn_code')
+        else:
+            expense.hsn_code = request.POST.get('hsn_code')
+            expense.sac = request.POST.get('sac')
+        
+        expense.gst_treatment = request.POST.get('gst_treatment')
+        expense.destination_of_supply = request.POST.get('destination_of_supply')
+        expense.reverse_charge = request.POST.get('reverse_charge', False)
+        expense.tax = request.POST.get('tax')
+        expense.invoice = request.POST.get('invoice')
+        expense.customer_name = request.POST.get('customer_name')
+        expense.reporting_tags = request.POST.get('reporting_tags')
+        expense.taxamt = request.POST.get('taxamt', False)
+        
+        expense.save()
+        return redirect('save_expense')
+
     context = {
         'expense': expense,
     }
-    return render(request, 'expenseview.html', context)
+    return render(request, 'editexpense.html', context)
+
+
 
 
 

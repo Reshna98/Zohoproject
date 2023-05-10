@@ -24,5 +24,6 @@ urlpatterns = [
     path('save_expense',views.save_expense,name='save_expense'),
     path('add_accountE',views.add_accountE,name='add_accountE'),
     path('expense_details/<int:pk>',views.expense_details,name='expense_details'),
+    path('edit_expense/<int:pk>',views.edit_expense,name='edit_expense'),
     
 ]

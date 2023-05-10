@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{%load static%}
+{% load static %}
 {% block content %}
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -24,24 +24,95 @@
 <div class="row fixed-top" style="top: 7rem;margin-left: 14rem;">
 <div class="col-md-10">
   <div style="height: 400px; width:1100px; overflow-y: scroll;padding-left: 10%;">
+  <h1 style="color: white;"> Add Expense</h1>
+  <form method="POST" action="{% url 'edit_expense' expense.id %}" enctype="multipart/form-data">
+    {% csrf_token %}
     <div class="form-group row">
-      <label class="col-sm-2 col-form-label"> Expense Account</label>
-      <div class="col-sm-10 col-md-7 col-9 ml-5">
-        <select name="sel_acc" class="form-control">
-          {% for account_type in type %}
-            <option value="" disabled class="btn btn-dark text-white"><b>{{ account_type }}</b></option>
-            {% for account in accounts %}
-              {% if account.type == account_type %}
-                <option value="{{ account.id }}">{{ account.name }}</option>
-              {% endif %}
-            {% endfor %}
+      <label for="date" class="col-sm-2 col-form-label">Date</label>
+      <div class="col-sm-10">
+        <!-- <input type="date" class="form-control" id="date" name="date" value="{{ expense.date }}"> -->
+        <input type="date" class="form-control" id="date" name="date" value="{{ expense.date|date:'Y-m-d' }}">
+
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="expense_account" class="col-sm-2 col-form-label">Expense account</label>
+      <div class="col-sm-10">
+        <select id="expense_account" name="expense_account" class="form-control select2">
+          <option value="">-- Select Expense Account --</option>
+          <optgroup label="Other current asset">
+            <option value="Advance tax" {% if expense.expense_account == 'Advance tax' %}selected{% endif %}>Advance tax</option>
+            <option value="Employee advance">Employee advance</option>
+            <option value="Prepaid Expenses">Prepaid Expenses</option>
+            <option value="GST TCS Receivable">GST TCS Receivable</option>
+            <option value="GST TDS Receivable">GST TDS Receivable</option>
+            <option Value="Input TAX Credits">Input TAX Credits</option>
+            <ul style="margin-left: 30px;">
+              <li><option value="Input CGST">Input CGST</option></li>
+              <li><option value="Input IGST">Input IGST</option></li>
+              <li><option value="Input SGST">Input SGST</option></li>
+            </ul>
+            <option value="Reverse charge tax input but not due">Reverse charge tax input but not due</option>
+            <option value="sales to customers(cash)">sales to customers(cash)</option>
+            <option Value="TDS Receivable">TDS Receivable</option>
+          </optgroup>
+          <optgroup label="Expense">
+            <option value="Advertising and marketing">Advertising and marketing</option>
+            <option value="Automobile expense">Automobile expense</option>
+            <option value="Bad Debt">Bad Debt</option>
+            <option value="Bank fees and charges">Bank fees and charges</option>
+            <option value="Consultant expense">Consultant expense</option>
+            <option value="Credit card charges">Credit card charges</option>
+            <option value="Depreciation expense">Depreciation expense</option>
+            <option value="IT and Internet expenses">IT and Internet expenses</option>
+            <option value="Janitorial Expense">Janitorial Expense</option>
+            <option value="Lodging">Lodging</option>
+            <option value="Meals and Entertaiment">Meals and Entertaiment</option>
+            <option value="Office suppplies">Office suppplies</option>
+            <option value="Other Expenses">Other Expenses</option>
+            <option value="Postage">Postage</option>
+            <option value="Printing and stationary">Printing and stationary</option>
+            <option value="Rent expense">Rent expense</option>
+            <option value="Repairs and maintenance">Repairs and maintenance</option>
+            <option value="Salaries and Employee wages">Salaries and Employee wages</option>
+            <option value="Telephone Expense">Telephone Expense</option>
+            <option value="Travel Expense">Travel Expense</option>
+            <option value="Uncategorized">Uncategorized</option>
+            <option value="Contract assets">Contract assets</option>
+            <option value="Depreciation and amortisation">Depreciation and amortisation</option>
+            <option value="Merchandise">Merchandise</option>
+            <option value="Row materials and Consumables">Row materials and Consumables</option>
+            <option value="Transportation">Transportation </option>
+          </optgroup>
+          <optgroup label="Other current liability">
+            <option value="Employee reimbursements">Employee reimbursements</option>
+            <option value="Opening balance adjustments">Opening balance adjustments</option>
+            <option value="Tax payable">Tax payable</option>
+            <option value="Unearned Revenue">Unearned Revenue</option>
+            <option value="GST Payable">GST Payable</option>
+            <ul style="margin-left: 30px;">
+              <li><option value="Output CGST">Output CGST</option></li>
+              <li><option value="Output IGST">Output IGST</option></li>
+              <li><option value="Output SGST">Output SGST</option></li>
+            </ul>
+            <option value="45">TDS Payable</option>
+          </optgroup>
+          <optgroup label="Fixed asset">
+            <option value="Furniture and equipments">Furniture and equipments</option>
+          </optgroup>
+          {% for account in accounts %}
+          <option value="{{ account.id }}">{{ account.name }}</option>
           {% endfor %}
         </select>
-      </div>
+        <!-- <div class="input-group-append">
+          <button type="button" id="add-account-btn" class="btn btn-secondary">
+           <span class="d-none d-sm-inline">+ New Account</span>
+          </button>
+        </div> -->
       <button type="button" onclick="openpopup()">Add Account</button>
-    </div>
-  
     
+      </div>
+    </div>
     
     <div class="form-group row">
       <label class="col-sm-2 col-form-label">Expense Type</label>
@@ -353,7 +424,50 @@
 </form> 
 </section>
 
-
+<!-- <div class="modal fade" id="add-account-modal" tabindex="-1" role="dialog" aria-labelledby="add-account-modal-label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="add-account-modal-label">Add Account</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="account-type" class="col-form-label">Account Type:</label>
+            <select id="account-type" name="account-type" class="form-control">
+              <option value="">-- Select Account Type --</option>
+              <option value="1">Expense</option>
+              <option value="2">Asset</option>
+              <option value="3">Liability</option>
+              <option value="4">Equity</option>
+              <option value="5">Revenue</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="account-name" class="col-form-label">Account Name:</label>
+            <input type="text" class="form-control" id="account-name" name="account-name">
+          </div>
+          <div class="form-group">
+            <label for="account-code" class="col-form-label">Account Code:</label>
+            <input type="text" class="form-control" id="account-code" name="account-code">
+          </div>
+          <div class="form-group">
+            <label for="account-description" class="col-form-label">Description:</label>
+            <textarea class="form-control" id="account-description" name="account-description"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div> -->
 
 <div class="popup" id="popup" style="height: 150%;">
   <div style="margin-top: 4rem;" class="display-flex">
@@ -399,6 +513,5 @@
   //     });
   //   });
   </script>
-
+  
 {%endblock%}
-
