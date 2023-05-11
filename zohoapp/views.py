@@ -357,7 +357,8 @@ def expensepage(request):
 def save_expense(request):
     if request.method == 'POST':
         date = request.POST.get('date')
-        expense_account = request.POST.get('expense_account')
+        select=request.POST['select']
+        expense_account=Account.objects.get(id=select)
         amount = request.POST.get('amount')
         expense_type = request.POST.get('expense_type')
         paid = request.POST.get('paid')
@@ -404,6 +405,8 @@ def save_expense(request):
     return render(request, 'addexpense.html') 
 
 def add_accountE(request):
+    accounts = Account.objects.all()
+    account_types = set(Account.objects.values_list('type', flat=True))
     if request.method == 'POST':
         type = request.POST.get('type')
         name = request.POST.get('name')
@@ -412,9 +415,17 @@ def add_accountE(request):
         description=request.POST.get('description')
         new_account = Account(type=type,name=name,code=code,pname=pname,description=description)
         new_account.save()
-        return redirect("save_expense")
+        accounts = Account.objects.all()
+
+    # accounts = Account.objects.all()
+    # account_types = set(Account.objects.values_list('type', flat=True))
+
+    return render(request, 'addexpense.html', {
+        'accounts': accounts,
+        'account_types': account_types,
+    })
         
-    return render(request,'addexpense.html')
+    # return render(request,'addexpense.html')
 
 def expense_details(request, pk):
     user = request.user
@@ -463,6 +474,18 @@ def edit_expense(request, pk):
     return render(request, 'editexpense.html', context)
 
 
-
-
-
+# def add_acc(request):
+#     account = Account.objects.all()
+#     type = set(Account.objects.values_list('type', flat=True))
+#     return render(request,'addexpense.html',{
+               
+#                             "account":account,"type":type,
+                            
+#                             })
+# def add_acc(request):
+#     accounts = Account.objects.all()
+#     account_types = set(Account.objects.values_list('type', flat=True))
+#     return render(request, 'addexpense.html', {
+#         'accounts': accounts,
+#         'account_types': account_types,
+#     })

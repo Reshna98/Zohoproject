@@ -22,49 +22,54 @@
 
 </style>
 <div class="row fixed-top" style="top: 7rem;margin-left: 14rem;">
-<div class="col-md-10">
-  <div style="height: 400px; width:1100px; overflow-y: scroll;padding-left: 10%;">
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label"> Expense Account</label>
-      <div class="col-sm-10 col-md-7 col-9 ml-5">
-        <select name="sel_acc" class="form-control">
-          {% for account_type in type %}
-            <option value="" disabled class="btn btn-dark text-white"><b>{{ account_type }}</b></option>
-            {% for account in accounts %}
-              {% if account.type == account_type %}
-                <option value="{{ account.id }}">{{ account.name }}</option>
-              {% endif %}
-            {% endfor %}
-          {% endfor %}
-        </select>
-      </div>
-      <button type="button" onclick="openpopup()">Add Account</button>
-    </div>
-  
-    
-    
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label">Expense Type</label>
-      <div class="col-sm-10" style="color: white;">
-        <!-- <div class="form-check form-check-inline"> -->
+  <div class="col-md-10">
+    <form action="{% url 'save_expense' %}" method="post">
+      {% csrf_token %}
+      <div style="height: 400px; width:1100px; overflow-y: scroll;padding-left: 10%;">
+        <div class="form-group row">
+          <label for="date" class="col-sm-2 col-form-label">Date</label>
+          <div class="col-sm-10">
+            <input type="date" class="form-control" id="date" name="date">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label"> Expense Account</label>
+          <div class="col-sm-10 col-md-7 col-9 ml-5">
+            <select class="form-control form-select" id="select" name="select" onchange="openpopup(this);" required>
+              <option hidden disabled selected value="">Select Account</option>
+              <!-- {% for account in accounts %}
+              <option value="{{ account.id }}">{{ account.type }}</option>
+              {% endfor %} -->
+              {% for type in account_types %}
+              <option value="{{ type }}">{{ type }}</option>
+              {% endfor %}
+              
+              <option value="new" style="color: blue;">New Account</option>
+            </select>
+          </div>
+        </div>
+
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Expense Type</label>
+        <div class="col-sm-10" style="color: white;">
           <input type="radio" name="expense_type" value="goods" onclick="toggleSelects()">Goods
           <input type="radio" name="expense_type" value="service" onclick="toggleSelects()">Service
+        </div>
       </div>
-    </div>
     
-    <div class="form-group row" id="hsn_div" style="display: none;">
-      <label id="hsn_label" for="hsn_code" class="col-sm-2 col-form-label" >HSN</label>
+      <div class="form-group row" id="hsn_div" style="display: none;">
+        <label id="hsn_label" for="hsn_code" class="col-sm-2 col-form-label">HSN</label>
         <div class="col-sm-10">
           <input type="text" id="hsn_code" name="hsn_code" class="form-control" style="margin-left: 22%;">
         </div>
-    </div>
-    <div class="form-group row" id="sac_div" style="display:block;">
-        <label id="sac_label" for="sac" class="col-sm-2 col-form-label" >SAC</label>
+      </div>
+      <div class="form-group row" id="sac_div" style="display:block;">
+        <label id="sac_label" for="sac" class="col-sm-2 col-form-label">SAC</label>
         <div class="col-sm-10">
-          <input type="text" id="sac" name="sac" class="form-control"style="margin-left: 22%;">
+          <input type="text" id="sac" name="sac" class="form-control" style="margin-left: 22%;">
         </div>
-    </div>
-    <script>
+      </div>
+      <script>
       function toggleSelects() {
         var radio = document.querySelector('input[name="expense_type"]:checked');
         var select1_div = document.getElementById("hsn_div");
@@ -96,233 +101,233 @@
       }
     
       window.addEventListener('load', setDefaultSelection);
-    </script>
-    <div class="form-group row">
-      <label for="notes" class="col-sm-2 col-form-label">Notes</label>
-      <div class="col-sm-10">
-        <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+      </script>
+      <div class="form-group row">
+        <label for="notes" class="col-sm-2 col-form-label">Notes</label>
+        <div class="col-sm-10">
+          <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+        </div>
       </div>
-    </div>
-    <div class="form-group row">
-      <label for="amount" class="col-sm-2 col-form-label">Amount</label>
-      <div class="col-sm-10">
-        <div class="input-group">
-          <div class="input-group-append">
-            <select class="form-control" id="currency" name="currency">
-              <option value="INR">INR</option>
-              <option value="USD">USD</option>
-              <option value="EUR">EUR</option>
-              <option value="GBP">GBP</option>
-              <option value="JPY">JPY</option>
-              <option value="AUD">AUD</option>
-              <option value="CAD">CAD</option>
-              <option value="CHF">CHF</option>
-              <option value="CNY">CNY</option>
-              <option value="HKD">HKD</option>
+      <div class="form-group row">
+        <label for="amount" class="col-sm-2 col-form-label">Amount</label>
+        <div class="col-sm-10">
+          <div class="input-group">
+            <div class="input-group-append">
+              <select class="form-control" id="currency" name="currency">
+                <option value="INR">INR</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <option value="GBP">GBP</option>
+                <option value="JPY">JPY</option>
+                <option value="AUD">AUD</option>
+                <option value="CAD">CAD</option>
+                <option value="CHF">CHF</option>
+                <option value="CNY">CNY</option>
+                <option value="HKD">HKD</option>
+              </select>
+            </div>
+            <input type="number" class="form-control" id="amount" name="amount">
+          </div>
+        </div>
+      </div>
+      
+        <div class="form-group row">
+          <label for="paid" class="col-sm-2 col-form-label">Paid Through</label>
+          <div class="col-sm-10">
+            <select class="form-control select2" id="paid" name="paid">
+              <option value="">-- Select Expense Account --</option>
+              <optgroup label="Bank">
+                <option value="credit card">Credit Card</option>
+                <option value="debit card">Debit Card</option>
+                <option value="netbanking">Net Banking</option>
+              </optgroup>
+              <optgroup label="Cash">
+                <option value="Petty Cash">Petty Cash</option>
+                <option value="Undeposited Funds">Undeposited Funds</option>
+              </optgroup>
+              <optgroup label="Other current asset">
+                <option value="Advance tax">Advance tax</option>
+                <option value="Employee Advance">Employee Advance</option>
+                <option value="Prepaid Expenses">Prepaid Expenses</option>
+              </optgroup>
+              <optgroup label="Payment clearing account">
+                <option value="Strip Clearing Acccount">Strip Clearing Acccount</option>
+              </optgroup>
             </select>
           </div>
-          <input type="number" class="form-control" id="amount" name="amount">
         </div>
-      </div>
-    </div>
-    
-    <div class="form-group row">
-      <label for="paid" class="col-sm-2 col-form-label">Paid Through</label>
-      <div class="col-sm-10">
-        <select class="form-control select2" id="paid" name="paid">
-          <option value="">-- Select Expense Account --</option>
-          <optgroup label="Bank">
-            <option value="credit card">Credit Card</option>
-            <option value="debit card">Debit Card</option>
-            <option value="netbanking">Net Banking</option>
-          </optgroup>
-          <optgroup label="Cash">
-            <option value="Petty Cash">Petty Cash</option>
-            <option value="Undeposited Funds">Undeposited Funds</option>
-          </optgroup>
-          <optgroup label="Other current asset">
-            <option value="Advance tax">Advance tax</option>
-            <option value="Employee Advance">Employee Advance</option>
-            <option value="Prepaid Expenses">Prepaid Expenses</option>
-          </optgroup>
-          <optgroup label="Payment clearing account">
-            <option value="Strip Clearing Acccount">Strip Clearing Acccount</option>
-          </optgroup>
-        </select>
-      </div>
-    </div>
-    
-    <div class="form-group row">
-      <label for="vendor" class="col-sm-2 col-form-label">Vendor</label>
-      <div class="col-sm-10">
-        <select class="form-control select2" id="vendor" name="vendor">
-          <option value="">-- Select a vendor --</option>
-          <option value="registered Vendor">registered Vendor</option>
-          <option value="overseas Vendor">overseas Vendor</option>
-          <option value="SEZ Vendor">SEZ Vendor</option>
-          <option value="Deemed Export Vendor">Deemed Export Vendor</option>
-          <option value="Unregistered Vendor">Unregistered Vendor</option>
-          <option value="Composition Reg Vendor">Composition Reg Vendor</option>
-        </select>
-      </div>
-    </div>
-    
-    <div class="form-group row">
-      <label for="gst_treatment" class="col-sm-2 col-form-label">GST Treatment</label>
-      <div class="col-sm-10">
-        <select class="form-control select2" id="gst_treatment" name="gst_treatment">
-          <option value="">-- Select GST Treatment --</option>
-          <option value="Registered business-
-          Regular Bussiness that is registered under gst">Registered business-
-            Regular Bussiness that is registered under gst</option>
-          <option value="Registered business-Composition Bussiness that is registered under the composition scheme in gst">Registered business-Composition Bussiness that is registered under the composition scheme in gst</option>
-          <option value="Unregistered Business- Business that has not been registered under gst ">Unregistered Business- Business that has not been registered under gst  </option>
-          <option value="Consumer- a customer who is a regular consumer">Consumer- a customer who is a regular consumer</option>
-          <option value="Overseas- Persons with whom you do import or export of supplies outside india ">Overseas- Persons with whom you do import or export of supplies outside india </option>
-          <option value="Business(unit)-That is located in a special economic zone(SEZ) of india or a SEZ Developer">Business(unit)-That is located in a special economic zone(SEZ) of india or a SEZ Developer</option>
-          <option value="Notified list of goods manufactured and supplied within india classified as deemed export">Notified list of goods manufactured and supplied within india classified as deemed export</option>
-        </select>
-      </div>
-    </div>
-    
-    <div class="form-group row">
-      <label for="destination_of_supply" class="col-sm-2 col-form-label">Destination of Supply</label>
-      <div class="col-sm-10">
-        <select class="form-control select2" id="destination_of_supply" name="destination_of_supply">
-          <option value="">-- Select Destination State --</option>
-          <option value="AN">Andaman and Nicobar Islands (AN)</option>
-          <option value="AP">Andhra Pradesh (AP)</option>
-          <option value="AR">Arunachal Pradesh (AR)</option>
-          <option value="AS">Assam (AS)</option>
-          <option value="BR">Bihar (BR)</option>
-          <option value="CH">Chandigarh (CH)</option>
-          <option value="CT">Chhattisgarh (CT)</option>
-          <option value="DN">Dadra and Nagar Haveli and Daman and Diu (DN)</option>
-          <option value="DL">Delhi (DL)</option>
-          <option value="GA">Goa (GA)</option>
-          <option value="GJ">Gujarat (GJ)</option>
-          <option value="HR">Haryana (HR)</option>
-          <option value="HP">Himachal Pradesh (HP)</option>
-          <option value="JK">Jammu and Kashmir (JK)</option>
-          <option value="JH">Jharkhand (JH)</option>
-          <option value="KA">Karnataka (KA)</option>
-          <option value="KL">Kerala (KL)</option>
-          <option value="LD">Lakshadweep (LD)</option>
-          <option value="MP">Madhya Pradesh (MP)</option>
-          <option value="MH">Maharashtra (MH)</option>
-          <option value="MN">Manipur (MN)</option>
-          <option value="ML">Meghalaya (ML)</option>
-          <option value="MZ">Mizoram (MZ)</option>
-          <option value="NL">Nagaland (NL)</option>
-          <option value="OR">Odisha (OR)</option>
-          <option value="PY">Puducherry (PY)</option>
-          <option value="PB">Punjab (PB)</option>
-          <option value="RJ">Rajasthan (RJ)</option>
-          <option value="SK">Sikkim (SK)</option>
-          <option value="TN">Tamil Nadu (TN)</option>
-          <option value="TG">Telangana (TG)</option>
-          <option value="TR">Tripura (TR)</option>
-          <option value="UP">Uttar Pradesh (UP)</option>
-          <option value="UK">Uttarakhand (UK)</option>
-          <option value="WB">West Bengal (WB)</option>
-        </select>
-      </div>
-    </div>
-    
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label">Reverse Charge:</label>
-      <div class="col-sm-10">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" name="reverse_charge" id="reverse_charge" value="1">
-          <label class="form-check-label" for="reverse_charge">
-           This transaction is applicable for reverse charge
-          </label>
-        </div>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="invoice" class="col-sm-2 col-form-label">Invoice</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" id="invoice" name="invoice">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="tax" class="col-sm-2 col-form-label">Tax</label>
-      <div class="col-sm-10">
-        <select class="form-control select2" id="tax" name="tax">
-          <option value="">-- Select Tax --</option>
-          <option value="">Non-Taxable</option>
-          <optgroup label="Taxes">
-            <option value="IGST0[0%]">IGST0[0%]</option>
-            <option value="IGST5[5%]">IGST5[5%]</option>
-            <option value="IGST12[12%]">IGST12[12%]</option>
-            <option value="IGST18[18%]">IGST18[18%]</option>
-            <option value="IGST28[28%]">IGST28[28%]</option>
-          </optgroup>
-          <optgroup label="Tax Group">
-            <option value="GST0[0%]">GST0[0%]</option>
-            <option value="GST5[5%]">GST5[5%]</option>
-            <option value="GST12[12%]">GST12[12%]</option>
-           <option value="GST18[18%]">GST18[18%]</option>
-           <option value="GST28[28%]">GST28[28%]</option>
-          </optgroup>
-        </select>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="customer_name" class="col-sm-2 col-form-label">Customer</label>
-      <div class="col-sm-10">
-        <select class="form-control" id="customer_name" name="customer_name">
-          <option value="">-- Select a customer --</option>
-          <option value="Registered customer">Registered customer</option>
-          <option value="Overseas customer">Overseas customer</option>
-          <option value="SEZ customer">SEZ customer</option>
-          <option value="Deemed Export Customer">Deemed Export Customer</option>
-          <option value="Unregistered Customer">Unregistered Customer</option>
-          <option value="Composition reg customer">Composition reg customer</option>
-          <option value="Consumer Customer">Consumer Customer</option>
-        </select>
-      </div>
-    </div>
-
-    
-    <!-- <div class="form-group row">
-      <label for="reporting_tags" class="col-sm-2 col-form-label">Reporting tags</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" id="reporting_tags" name="reporting_tags">
-      </div>
-    </div> -->
-    <div class="form-group row">
-      <label for="reporting_tags" class="col-sm-2 col-form-label">Reporting Tags:</label>
-      <div class="col-sm-10">
-        <input type="hidden" class="form-control" id="reporting_tags" name="reporting_tags">
-        <span id="reporting_tags_label"></span>
-        <a href="#" class="associate-tag-link" data-toggle="modal" data-target="#associate-tag-modal"> + Associate Tag</a>
-      </div>
-    </div>
-    <div class="modal fade" id="associate-tag-modal" tabindex="-1" role="dialog" aria-labelledby="associate-tag-modal-label" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="associate-tag-modal-label">Associate Tag</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+        
+        <div class="form-group row">
+          <label for="vendor" class="col-sm-2 col-form-label">Vendor</label>
+          <div class="col-sm-10">
+            <select class="form-control select2" id="vendor" name="vendor">
+              <option value="">-- Select a vendor --</option>
+              <option value="registered Vendor">registered Vendor</option>
+              <option value="overseas Vendor">overseas Vendor</option>
+              <option value="SEZ Vendor">SEZ Vendor</option>
+              <option value="Deemed Export Vendor">Deemed Export Vendor</option>
+              <option value="Unregistered Vendor">Unregistered Vendor</option>
+              <option value="Composition Reg Vendor">Composition Reg Vendor</option>
+            </select>
           </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label for="associated_tag">Associated Tag:</label>
-              <input type="text" class="form-control" id="associated_tag">
+        </div>
+        
+        <div class="form-group row">
+          <label for="gst_treatment" class="col-sm-2 col-form-label">GST Treatment</label>
+          <div class="col-sm-10">
+            <select class="form-control select2" id="gst_treatment" name="gst_treatment">
+              <option value="">-- Select GST Treatment --</option>
+              <option value="Registered business-
+                  Regular Bussiness that is registered under gst">Registered business-
+                Regular Bussiness that is registered under gst</option>
+              <option value="Registered business-Composition Bussiness that is registered under the composition scheme in gst">
+                Registered business-Composition Bussiness that is registered under the composition scheme in gst</option>
+              <option value="Unregistered Business- Business that has not been registered under gst ">Unregistered Business-
+                Business that has not been registered under gst </option>
+              <option value="Consumer- a customer who is a regular consumer">Consumer- a customer who is a regular consumer
+              </option>
+              <option value="Overseas- Persons with whom you do import or export of supplies outside india ">Overseas- Persons
+                with whom you do import or export of supplies outside india </option>
+              <option value="Business(unit)-That is located in a special economic zone(SEZ) of india or a SEZ Developer">
+                Business(unit)-That is located in a special economic zone(SEZ) of india or a SEZ Developer</option>
+              <option value="Notified list of goods manufactured and supplied within india classified as deemed export">Notified
+                list of goods manufactured and supplied within india classified as deemed export</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-group row">
+          <label for="destination_of_supply" class="col-sm-2 col-form-label">Destination of Supply</label>
+          <div class="col-sm-10">
+            <select class="form-control select2" id="destination_of_supply" name="destination_of_supply">
+              <option value="">-- Select Destination State --</option>
+              <option value="AN">Andaman and Nicobar Islands (AN)</option>
+              <option value="AP">Andhra Pradesh (AP)</option>
+              <option value="AR">Arunachal Pradesh (AR)</option>
+              <option value="AS">Assam (AS)</option>
+              <option value="BR">Bihar (BR)</option>
+              <option value="CH">Chandigarh (CH)</option>
+              <option value="CT">Chhattisgarh (CT)</option>
+              <option value="DN">Dadra and Nagar Haveli and Daman and Diu (DN)</option>
+              <option value="DL">Delhi (DL)</option>
+              <option value="GA">Goa (GA)</option>
+              <option value="GJ">Gujarat (GJ)</option>
+              <option value="HR">Haryana (HR)</option>
+              <option value="HP">Himachal Pradesh (HP)</option>
+              <option value="JK">Jammu and Kashmir (JK)</option>
+              <option value="JH">Jharkhand (JH)</option>
+              <option value="KA">Karnataka (KA)</option>
+              <option value="KL">Kerala (KL)</option>
+              <option value="LD">Lakshadweep (LD)</option>
+              <option value="MP">Madhya Pradesh (MP)</option>
+              <option value="MH">Maharashtra (MH)</option>
+              <option value="MN">Manipur (MN)</option>
+              <option value="ML">Meghalaya (ML)</option>
+              <option value="MZ">Mizoram (MZ)</option>
+              <option value="NL">Nagaland (NL)</option>
+              <option value="OR">Odisha (OR)</option>
+              <option value="PY">Puducherry (PY)</option>
+              <option value="PB">Punjab (PB)</option>
+              <option value="RJ">Rajasthan (RJ)</option>
+              <option value="SK">Sikkim (SK)</option>
+              <option value="TN">Tamil Nadu (TN)</option>
+              <option value="TG">Telangana (TG)</option>
+              <option value="TR">Tripura (TR)</option>
+              <option value="UP">Uttar Pradesh (UP)</option>
+              <option value="UK">Uttarakhand (UK)</option>
+              <option value="WB">West Bengal (WB)</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Reverse Charge:</label>
+          <div class="col-sm-10">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="reverse_charge" id="reverse_charge" value="1">
+              <label class="form-check-label" for="reverse_charge">
+                This transaction is applicable for reverse charge
+              </label>
             </div>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" onclick="saveAssociatedTag()">Save</button>
+        </div>
+        <div class="form-group row">
+          <label for="invoice" class="col-sm-2 col-form-label">Invoice</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="invoice" name="invoice">
           </div>
         </div>
-      </div>
-    </div>
-   
+        <div class="form-group row">
+          <label for="tax" class="col-sm-2 col-form-label">Tax</label>
+          <div class="col-sm-10">
+            <select class="form-control select2" id="tax" name="tax">
+              <option value="">-- Select Tax --</option>
+              <option value="">Non-Taxable</option>
+              <optgroup label="Taxes">
+                <option value="IGST0[0%]">IGST0[0%]</option>
+                <option value="IGST5[5%]">IGST5[5%]</option>
+                <option value="IGST12[12%]">IGST12[12%]</option>
+                <option value="IGST18[18%]">IGST18[18%]</option>
+                <option value="IGST28[28%]">IGST28[28%]</option>
+              </optgroup>
+              <optgroup label="Tax Group">
+                <option value="GST0[0%]">GST0[0%]</option>
+                <option value="GST5[5%]">GST5[5%]</option>
+                <option value="GST12[12%]">GST12[12%]</option>
+                <option value="GST18[18%]">GST18[18%]</option>
+                <option value="GST28[28%]">GST28[28%]</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="customer_name" class="col-sm-2 col-form-label">Customer</label>
+          <div class="col-sm-10">
+            <select class="form-control" id="customer_name" name="customer_name">
+              <option value="">-- Select a customer --</option>
+              <option value="Registered customer">Registered customer</option>
+              <option value="Overseas customer">Overseas customer</option>
+              <option value="SEZ customer">SEZ customer</option>
+              <option value="Deemed Export Customer">Deemed Export Customer</option>
+              <option value="Unregistered Customer">Unregistered Customer</option>
+              <option value="Composition reg customer">Composition reg customer</option>
+              <option value="Consumer Customer">Consumer Customer</option>
+            </select>
+          </div>
+        </div>
+ 
+        <div class="form-group row">
+          <label for="reporting_tags" class="col-sm-2 col-form-label">Reporting Tags:</label>
+          <div class="col-sm-10">
+            <input type="hidden" class="form-control" id="reporting_tags" name="reporting_tags">
+            <span id="reporting_tags_label"></span>
+            <a href="#" class="associate-tag-link" data-toggle="modal" data-target="#associate-tag-modal"> + Associate Tag</a>
+          </div>
+        </div>
+        <div class="modal fade" id="associate-tag-modal" tabindex="-1" role="dialog" aria-labelledby="associate-tag-modal-label"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="associate-tag-modal-label">Associate Tag</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="associated_tag">Associated Tag:</label>
+                  <input type="text" class="form-control" id="associated_tag">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="saveAssociatedTag()">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
@@ -343,62 +348,52 @@
       }
     </script>
     
-    
-    
     <div class="col-sm-10 offset-sm-2">
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>
   </div>
   </div>
-</form> 
+</form>
 </section>
-
-
-
-<div class="popup" id="popup" style="height: 150%;">
-  <div style="margin-top: 4rem;" class="display-flex">
-   <h4 class="text-dark" >Add Account</h4>
-   <h6 class="float-right text-dark" style="margin-right: 1rem; margin-top: -2rem;" onclick="closepopup()">X</h6>
-  </div>
-   
-   <form style="margin-top: 3rem;" action="{%url 'add_accountE'%}" method="post">
-     {% csrf_token %}
-     <label class="text-dark" >Account type</label> <br>
-     <input required  type="text" name="type" id=""> <br>
-     <label  class="text-dark" >Account Name</label> <br>
-     <input required type="text" name="name" id=""> <br>
-     <label class="text-dark" >Parent name</label> <br>
-     <input type="text" name="pname" id=""> <br>
-     <label class="text-dark" >Account Code</label> <br>
-     <input type="text" name="code" id=""> <br>
-     <label class="text-dark" >Account Description</label> <br>
-     <input type="text" name="description" id=""> <br> <br>
-     <input  style="width: 5rem; height: 2rem; color: black;" class="btn btn-success" type="submit"  value="submit">
-   <button style="width: 5rem; height: 2rem; color: black;"  class="btn btn-secondary" type="submit" onclick="closepopup()"  >Cancel</button>
-   </form>
-
-
-   <script>
-     let popup=document.getElementById("popup");
-
-     function openpopup(){
-         popup.classList.add("open-popup");
-     }
-     function closepopup(){
-         popup.classList.remove("open-popup");
-     }
-
-   </script> 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script>
   $('.select2').select2();
-  // $(document).ready(function() {
-  //     $('#add-account-btn').on('click', function() {
-  //       $('#add-account-modal').modal('show');
-  //     });
-  //   });
   </script>
+  <div class="popup" id="popup" style="height: 150%;">
+    <div style="margin-top: 4rem;" class="display-flex">
+      <h4 class="text-dark">Add Account</h4>
+      <h6 class="float-right text-dark" style="margin-right: 1rem; margin-top: -2rem;" onclick="closepopup()">X</h6>
+    </div>
+    <form style="margin-top: 3rem;" action="{% url 'add_accountE' %}" method="post">
+        {% csrf_token %}
+        <label class="text-dark">Account type</label> <br>
+        <input required type="text" name="type" id="type"> <br>
+        <label class="text-dark">Account Name</label> <br>
+        <input required type="text" name="name" id="name"> <br>
+        <label class="text-dark">Parent name</label> <br>
+        <input type="text" name="pname" id="pname"> <br>
+        <label class="text-dark">Account Code</label> <br>
+        <input type="text" name="code" id="code"> <br>
+        <label class="text-dark">Account Description</label> <br>
+        <input type="text" name="description" id="description"> <br> <br>
+        <input style="width: 5rem; height: 2rem; color: black;" class="btn btn-success" type="submit" value="Submit">
+        <button style="width: 5rem; height: 2rem; color: black;" class="btn btn-secondary" type="button" onclick="closepopup()">Cancel</button>
+    </form>
+  </div>
+<script>
+  let popup = document.getElementById("popup");
+  let select = document.getElementById("select");
 
+  function openpopup(select) {
+      if (select.value === 'new') {
+          popup.classList.add("open-popup");
+      }
+  }
+
+  function closepopup() {
+      popup.classList.remove("open-popup");
+  }
+</script>
 {%endblock%}
 
