@@ -37,13 +37,18 @@
           <div class="col-sm-10 col-md-7 col-9 ml-5">
             <select class="form-control form-select" id="select" name="select" onchange="openpopup(this);" required>
               <option hidden disabled selected value="">Select Account</option>
-              <!-- {% for account in accounts %}
-              <option value="{{ account.id }}">{{ account.type }}</option>
-              {% endfor %} -->
-              {% for type in account_types %}
-              <option value="{{ type }}">{{ type }}</option>
+              {% for account_type in account_types %}
+              <option value="" disabled class="btn btn-dark text-white"><b>{{ account_type }}</b></option>
+              {% for account in accounts %}
+              {% if account.type == account_type %}
+              {% if account.Account_name == selected_type %}
+                  <option value="{{ account.id}}" selected>{{ account.name }}</option>
+              {% else %}
+                  <option value="{{ account.id }}">{{ account.name }}</option>
+              {% endif %}
+              {% endif %}
               {% endfor %}
-              
+              {% endfor %}
               <option value="new" style="color: blue;">New Account</option>
             </select>
           </div>

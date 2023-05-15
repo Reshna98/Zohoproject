@@ -81,6 +81,7 @@ class Expense(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     expense_account=models.ForeignKey(Account,on_delete=models.CASCADE)
     amount=models.TextField(max_length=255)
+    currency=models.TextField(max_length=255)
     expense_type=models.TextField(max_length=255)
     paid=models.TextField(max_length=255)
     vendor=models.TextField(max_length=255)#ForeignKey
@@ -96,3 +97,5 @@ class Expense(models.Model):
     date = models.DateField()
     sac=models.TextField(max_length=255)
     taxamt=models.TextField(max_length=255)
+    attachment = models.FileField(upload_to='expense_attachments/', blank=True, null=True)
+

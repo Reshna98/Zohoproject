@@ -28,7 +28,7 @@
             {%for expense in expenses%}
              <tr>
     
-               <td ><a class="text-white" href="{% url 'expense_details' expense.id %}" >{{expense.expense_account.type}}</a></td>
+               <td ><a class="text-white" href="{% url 'expense_details' expense.id %}" >{{expense.expense_account.name}}</a></td>
             
              </tr>
             {%endfor%}
@@ -37,13 +37,20 @@
       
        </div> 
         <div class="col-md-9" style="margin-left: 25rem;">
-            <div class="row" style="position: fixed;">
-              <div class="col-md-4" style="position: fixed;"><a class="text-white" style="font-size: 1.5rem;"><h2>{{expense.expense_account.type}}</h2></a></div>
-            <div class="col-md-4 " style="margin-top: -3rem;margin-left: 20rem;position: fixed;"><a style="color: #ccc;width: 4rem;height: 2rem;margin-top: 3rem;" class="btn btn-light text-dark " onclick="location.href ='{% url 'edit_expense' expense.id %}' "><i class="fa fa-pencil"></i></i></a> 
-        <a href=""style="color: #ccc;height: 2rem;margin-top: 3rem;margin-left: 5rem;"  class="btn btn-danger  text-white " >Delete</a>
-      </div>
-    </div>
-
+          <div class="row" style="position: fixed;">
+            <div class="col-md-4" style="position: fixed;"><a class="text-white" style="font-size: 1.5rem;">
+                <h2>{{expense.expense_account.name}}</h2>
+              </a></div>
+            <div class="col-md-4 " style="margin-top: -3rem;margin-left: 20rem;position: fixed;"><a
+                style="color: #ccc;width: 4rem;height: 2rem;margin-top: 3rem;" class="btn btn-light text-dark "
+                onclick="location.href ='{% url 'edit_expense' expense.id %}' "><i class="fa fa-pencil"></i></i></a>
+              <a href="" style="color: #ccc;height: 2rem;margin-top: 3rem;margin-left: 5rem;"
+                class="btn btn-danger  text-white ">Delete</a>
+        
+                
+          </div>
+        </div>
+        
     
    <div class="tabs" style="margin-top:2%;position: fixed;">
    <div class="tab-header">
@@ -93,6 +100,8 @@
           font-size: 14px;
           margin: 0;
         }
+       
+
       </style>
       
       <div class="overview-container">
@@ -103,7 +112,7 @@
       
         <div class="overview-card medium-card">
           <h2>Expense Account </h2>
-          <p>{{expense.expense_account.type}}</p>
+          <p>{{expense.expense_account.name}}</p>
           <h2>Expense Type </h2>
           <p>{{expense.expense_type}}</p>
         </div>

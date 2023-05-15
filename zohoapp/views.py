@@ -360,6 +360,7 @@ def save_expense(request):
         select=request.POST['select']
         expense_account=Account.objects.get(id=select)
         amount = request.POST.get('amount')
+        currency = request.POST.get('currency')
         expense_type = request.POST.get('expense_type')
         paid = request.POST.get('paid')
         vendor = request.POST.get('vendor')
@@ -370,7 +371,7 @@ def save_expense(request):
         else:
             hsn_code = request.POST.get('hsn_code')
             sac = request.POST.get('sac')
-
+        attachment_file = request.FILES.get('attachment')
         gst_treatment = request.POST.get('gst_treatment')
         destination_of_supply = request.POST.get('destination_of_supply')
         reverse_charge = request.POST.get('reverse_charge',False)
@@ -384,6 +385,7 @@ def save_expense(request):
             date=date,
             expense_account=expense_account,
             amount=amount,
+            currency=currency,
             taxamt=taxamt,
             sac=sac,
             expense_type=expense_type,
@@ -397,7 +399,8 @@ def save_expense(request):
             tax=tax,
             invoice=invoice,
             customer_name=customer_name,
-            reporting_tags=reporting_tags
+            reporting_tags=reporting_tags,
+            attachment_file = attachment_file 
         )
         expense.save()
         return redirect('expensepage')  
@@ -417,8 +420,6 @@ def add_accountE(request):
         new_account.save()
         accounts = Account.objects.all()
 
-    # accounts = Account.objects.all()
-    # account_types = set(Account.objects.values_list('type', flat=True))
 
     return render(request, 'addexpense.html', {
         'accounts': accounts,
@@ -426,6 +427,7 @@ def add_accountE(request):
     })
         
     # return render(request,'addexpense.html')
+
 
 def expense_details(request, pk):
     user = request.user
