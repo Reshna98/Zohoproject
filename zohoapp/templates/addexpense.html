@@ -14,7 +14,7 @@
 }
 
 .select2-container .select2-selection--single{
-    height:34px !important;
+    height:34px 
 }
 .select2-container--default .select2-selection--single{
     border: 1px solid #ccc !important; 
@@ -288,19 +288,23 @@
         <div class="form-group row">
           <label for="customer_name" class="col-sm-2 col-form-label">Customer</label>
           <div class="col-sm-10">
-            <select class="form-control" id="customer_name" name="customer_name">
-              <option value="">-- Select a customer --</option>
-              <option value="Registered customer">Registered customer</option>
-              <option value="Overseas customer">Overseas customer</option>
-              <option value="SEZ customer">SEZ customer</option>
-              <option value="Deemed Export Customer">Deemed Export Customer</option>
-              <option value="Unregistered Customer">Unregistered Customer</option>
-              <option value="Composition reg customer">Composition reg customer</option>
-              <option value="Consumer Customer">Consumer Customer</option>
+            <select class="form-control form-select" id="select" name="select" onclick="handleSelectChange(this);" required>
+              <option hidden disabled selected value="">Select Customer</option>
+              {% for i in customer_names %}
+              <option value="{{i.id}}">{{i}}</option>
+              {% endfor %}
+              <option value="new" style="color: blue;">+ New Customer</option>
             </select>
-          </div>
-        </div>
- 
+            
+            <script>
+              function handleSelectChange(select) {
+                if (select.value === "new") {
+                  window.location.href = "entr_custmr";
+                }
+              }
+            </script>
+            
+        
         <div class="form-group row">
           <label for="reporting_tags" class="col-sm-2 col-form-label">Reporting Tags:</label>
           <div class="col-sm-10">
@@ -333,10 +337,10 @@
           </div>
         </div>
     
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script> -->
 
     <script>
       function saveAssociatedTag() {

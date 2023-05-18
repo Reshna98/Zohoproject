@@ -77,6 +77,9 @@ class Account(models.Model):
     code=models.CharField(max_length=255)
     type=models.CharField(max_length=255)
     description=models.TextField(blank=True)
+class payment_terms(models.Model):
+    Terms=models.CharField(max_length=100,null=True,blank=True)
+    Days=models.IntegerField(null=True,blank=True)  
 class addcustomer(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     customerName= models.CharField(max_length=100,null=True,blank=True)
@@ -140,4 +143,3 @@ class Expense(models.Model):
     sac=models.TextField(max_length=255)
     taxamt=models.TextField(max_length=255)
     attachment = models.FileField(upload_to='expense_attachments/', blank=True, null=True)
-

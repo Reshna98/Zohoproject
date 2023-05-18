@@ -493,7 +493,7 @@ def edit_expense(request, pk):
 #     })
 def add_customer(request):
     sb=payment_terms.objects.all()
-    return render(request,'customer.html',{'sb':sb})
+    return render(request,'addcustomer.html',{'sb':sb})
 def entr_custmr(request):
     if request.user.is_authenticated:
         if request.method=='POST':
@@ -509,61 +509,58 @@ def entr_custmr(request):
             dept=request.POST.get('dept')
             wbsite=request.POST.get('wbsite')
 
-            gstt=request.POST.get('gstt')
-            posply=request.POST.get('posply')
-            tax1=request.POST.get('tax1')
-            crncy=request.POST.get('crncy')
-            obal=request.POST.get('obal')
+            # gstt=request.POST.get('gstt')
+            # posply=request.POST.get('posply')
+            # tax1=request.POST.get('tax1')
+            # crncy=request.POST.get('crncy')
+            # obal=request.POST.get('obal')
 
-            select=request.POST.get('pterms')
-            pterms=payment_terms.objects.get(id=select)
-            pterms=request.POST.get('pterms')
+            # select=request.POST.get('pterms')
+            # pterms=payment_terms.objects.get(id=select)
+            # pterms=request.POST.get('pterms')
 
-            plst=request.POST.get('plst')
-            plang=request.POST.get('plang')
-            fbk=request.POST.get('fbk')
-            twtr=request.POST.get('twtr')
+            # plst=request.POST.get('plst')
+            # plang=request.POST.get('plang')
+            # fbk=request.POST.get('fbk')
+            # twtr=request.POST.get('twtr')
         
-            atn=request.POST.get('atn')
-            ctry=request.POST.get('ctry')
+            # atn=request.POST.get('atn')
+            # ctry=request.POST.get('ctry')
             
-            addrs=request.POST.get('addrs')
-            addrs1=request.POST.get('addrs1')
-            bct=request.POST.get('bct')
-            bst=request.POST.get('bst')
-            bzip=request.POST.get('bzip')
-            bpon=request.POST.get('bpon')
-            bfx=request.POST.get('bfx')
+            # addrs=request.POST.get('addrs')
+            # addrs1=request.POST.get('addrs1')
+            # bct=request.POST.get('bct')
+            # bst=request.POST.get('bst')
+            # bzip=request.POST.get('bzip')
+            # bpon=request.POST.get('bpon')
+            # bfx=request.POST.get('bfx')
 
-            sal=request.POST.get('sal')
-            ftname=request.POST.get('ftname')
-            ltname=request.POST.get('ltname')
-            mail=request.POST.get('mail')
-            bworkpn=request.POST.get('bworkpn')
-            bmobile=request.POST.get('bmobile')
+            # sal=request.POST.get('sal')
+            # ftname=request.POST.get('ftname')
+            # ltname=request.POST.get('ltname')
+            # mail=request.POST.get('mail')
+            # bworkpn=request.POST.get('bworkpn')
+            # bmobile=request.POST.get('bmobile')
 
-            bskype=request.POST.get('bskype')
-            bdesg=request.POST.get('bdesg')
-            bdept=request.POST.get('bdept')
+            # bskype=request.POST.get('bskype')
+            # bdesg=request.POST.get('bdesg')
+            # bdept=request.POST.get('bdept')
             u = User.objects.get(id = request.user.id)
 
-          
-            ctmr=customer(customerName=txtFullName,customerType=type,
+            ctmr=addcustomer(customerName=txtFullName,customerType=type,
                         companyName=cpname,customerEmail=email,customerWorkPhone=wphone,
                          customerMobile=mobile,skype=skname,designation=desg,department=dept,
-                           website=wbsite,GSTTreatment=gstt,placeofsupply=posply, Taxpreference=tax1,
-                             currency=crncy,OpeningBalance=obal,PaymentTerms=pterms,
-                                PriceList=plst,PortalLanguage=plang,Facebook=fbk,Twitter=twtr,
-                                 Attention=atn,country=ctry,Address1=addrs,Address2=addrs1,
-                                  city=bct,state=bst,zipcode=bzip,phone1=bpon,
-                                   fax=bfx,CPsalutation=sal,Firstname=ftname,
-                                    Lastname=ltname,CPemail=mail,CPphone=bworkpn,
-                                    CPmobile= bmobile,CPskype=bskype,CPdesignation=bdesg,
-                                     CPdepartment=bdept,user=u )
-            ctmr.save()  
+             website=wbsite,user=u )
             
-            return redirect("base")
-        return render(request,'base.html')
+            customer_names = addcustomer.objects.values_list('customerName', flat=True)
+            ctmr.save()  
+           
+
+            
+            return redirect("save_expense")
+        return render(request,'addcustomer.html', {
+              'customer_names': customer_names,
+             })
 def payment_term(request):
     if request.method=='POST':
         term=request.POST.get('term')
@@ -571,68 +568,8 @@ def payment_term(request):
         ptr=payment_terms(Terms=term,Days=day)
         ptr.save()
         return redirect("add_customer")
-def view_customr(request):
-    vc=customer.objects.all()
-    return render(request,'view_customer.html',{'vc':vc})
+# def view_customr(request):
+#     vc=addcustomer.objects.all()
+#     return render(request,'view_customer.html',{'vc':vc})
 
 
-def editcustomer(request,id):
-    cu=customer.objects.get(id=id)
-    pt=payment_terms.objects.all()
-  
-    return render(request,'edit_customer.html',{'cu':cu,'pt':pt})
-def editEnter_customer(request,id):
-        if request.method=='POST':
-            edit=customer.objects.get(id=id)
-            edit.customerType=request.POST.get('type')
-            edit.customerName=request.POST['txtFullName']
-            edit.companyName=request.POST['cpname']
-
-            edit.customerEmail=request.POST['email']
-            edit.customerWorkPhone=request.POST['wphone']
-            edit.customerMobile=request.POST['mobile']
-            edit.skype=request.POST['skname']
-            edit.designation=request.POST['desg']
-            edit.department=request.POST['dept']
-            edit.website=request.POST['wbsite']
-            edit.GSTTreatment=request.POST['gstt']
-            
-            edit.placeofsupply=request.POST['posply']
-           
-            edit.Taxpreference=request.POST['tax1']
-            edit.currency=request.POST['crncy']
-            edit.OpeningBalance=request.POST['obal']
-            
-            edit.PaymentTerms=request.POST['pterms']
-            
-            edit.PriceList=request.POST['plst']
-            edit.PortalLanguage=request.POST['plang']
-            edit .Facebook=request.POST['fbk']
-            edit.Twitter=request.POST['twtr']
-            edit.Attention=request.POST['atn']
-            edit.country=request.POST['ctry']
-
-            edit.Address1=request.POST['addrs']
-            edit.Address2=request.POST['addrs1']
-            edit.city=request.POST['bct']
-            edit.state=request.POST['bst']
-            edit.zipcode=request.POST['bzip']
-            edit.phone1=request.POST['bpon']
-            edit.fax=request.POST['bfx']
-
-            edit.CPsalutation=request.POST['sal']
-            edit.Firstname=request.POST['ftname']
-            edit.Lastname=request.POST['ltname']
-            edit.CPemail=request.POST['mail']
-            edit.CPphone=request.POST['bworkpn']
-            edit.CPmobile=request.POST['bmobile']
-            edit.CPskype=request.POST['bskype']
-
-            edit.CPdesignation=request.POST['bdesg'] 
-            edit.CPdepartment=request.POST['bdept']
-            
-           
-            edit.save()
-            return redirect('view_customr')
-
-        return render(request,'view_customer.html')
