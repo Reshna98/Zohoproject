@@ -286,23 +286,48 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="customer_name" class="col-sm-2 col-form-label">Customer</label>
+          <label for="customer_id" class="col-sm-2 col-form-label">Customer</label>
           <div class="col-sm-10">
-            <select class="form-control form-select" id="select" name="select" onclick="handleSelectChange(this);" required>
+            <!-- <select class="form-control form-select" id="select" name="select" onclick="handleSelectChange(this);" required>
               <option hidden disabled selected value="">Select Customer</option>
-              {% for i in customer_names %}
-              <option value="{{i.id}}">{{i}}</option>
+              {% for customer_name in customer_names %}
+              <option value="{{ customer_name.id }}">{{ customer_name }}</option>
               {% endfor %}
               <option value="new" style="color: blue;">+ New Customer</option>
             </select>
-            
-            <script>
+             -->
+             <!-- <select class="form-control form-select" id="customer_id" name="customer_id" onclick="handleSelectChange(this);" required>
+              <option hidden disabled selected value="">Select Customer</option>
+              {% for customer in customername %}
+                  <option value="{{ customer.id }}">{{ customername }}</option>
+              {% endfor %}
+              <option value="new" style="color: blue;">+ New Customer</option>
+          </select>
+          <script>
               function handleSelectChange(select) {
-                if (select.value === "new") {
-                  window.location.href = "entr_custmr";
-                }
+                  if (select.value === "new") {
+                      window.location.href = "{% url 'entr_custmr' %}";
+                  }
               }
-            </script>
+          </script> -->
+          <select class="form-control form-select" id="customer_id" name="customer_id" onchange="handleSelectChange(this);" required>
+            <option hidden disabled selected value="">Select Customer</option>
+           
+            {% for customer_id, customer_name in customers %}
+            
+              <option value="{{ customer_id }}">{{ customer_name }}</option>
+            {% endfor %}
+            <option value="new" style="color: blue;">+ New Customer</option>
+          </select>
+        
+        <script>
+            function handleSelectChange(select) {
+                if (select.value === "new") {
+                    window.location.href = "{% url 'entr_custmr' %}";
+                }
+            }
+        </script>
+        
             
         
         <div class="form-group row">

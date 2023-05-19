@@ -377,7 +377,9 @@ def save_expense(request):
         reverse_charge = request.POST.get('reverse_charge',False)
         tax = request.POST.get('tax')
         invoice = request.POST.get('invoice')
-        customer_name = request.POST.get('customer_name')
+        # customer_name = request.POST.get('customer_name')
+        customer_id= request.POST.get['customer_id']
+        customer = addcustomer.objects.get(id=customer_id)
         reporting_tags = request.POST.get('reporting_tags')
         taxamt=request.POST.get('taxamt',False)
         expense = Expense.objects.create(
@@ -398,7 +400,7 @@ def save_expense(request):
             reverse_charge=reverse_charge,
             tax=tax,
             invoice=invoice,
-            customer_name=customer_name,
+            customerName=customer,
             reporting_tags=reporting_tags,
             attachment_file = attachment_file 
         )
@@ -418,15 +420,14 @@ def add_accountE(request):
         description=request.POST.get('description')
         new_account = Account(type=type,name=name,code=code,pname=pname,description=description)
         new_account.save()
-        accounts = Account.objects.all()
-
+        # accounts = Account.objects.all()
 
     return render(request, 'addexpense.html', {
         'accounts': accounts,
         'account_types': account_types,
     })
         
-    # return render(request,'addexpense.html')
+       
 
 
 def expense_details(request, pk):
@@ -474,93 +475,70 @@ def edit_expense(request, pk):
         'expense': expense,
     }
     return render(request, 'editexpense.html', context)
-
-
-# def add_acc(request):
-#     account = Account.objects.all()
-#     type = set(Account.objects.values_list('type', flat=True))
-#     return render(request,'addexpense.html',{
-               
-#                             "account":account,"type":type,
-                            
-#                             })
-# def add_acc(request):
-#     accounts = Account.objects.all()
-#     account_types = set(Account.objects.values_list('type', flat=True))
-#     return render(request, 'addexpense.html', {
-#         'accounts': accounts,
-#         'account_types': account_types,
-#     })
-def add_customer(request):
-    sb=payment_terms.objects.all()
-    return render(request,'addcustomer.html',{'sb':sb})
 def entr_custmr(request):
-    if request.user.is_authenticated:
-        if request.method=='POST':
-            type=request.POST.get('type')
-            txtFullName=request.POST['txtFullName']
-            cpname=request.POST['cpname']
-           
-            email=request.POST.get('myEmail')
-            wphone=request.POST.get('wphone')
-            mobile=request.POST.get('mobile')
-            skname=request.POST.get('skname')
-            desg=request.POST.get('desg')      
-            dept=request.POST.get('dept')
-            wbsite=request.POST.get('wbsite')
+    # customer = addcustomer.objects.all()
+    # customername = set(addcustomer.objects.values_list('customerName', flat=True))
+    customer= addcustomer.objects.values_list('id', 'customerName')
+    if request.method == 'POST':
+        type = request.POST.get('type')
+        txtFullName = request.POST['txtFullName']
+        cpname = request.POST['cpname']
+        email = request.POST.get('myEmail')
+        wphone = request.POST.get('wphone')
+        mobile = request.POST.get('mobile')
+        skname = request.POST.get('skname')
+        desg = request.POST.get('desg')
+        dept = request.POST.get('dept')
+        wbsite = request.POST.get('wbsite')
+        u = User.objects.get(id=request.user.id)
 
-            # gstt=request.POST.get('gstt')
-            # posply=request.POST.get('posply')
-            # tax1=request.POST.get('tax1')
-            # crncy=request.POST.get('crncy')
-            # obal=request.POST.get('obal')
+        ctmr = addcustomer(
+            customerName=txtFullName, customerType=type,
+            companyName=cpname, customerEmail=email, customerWorkPhone=wphone,
+            customerMobile=mobile, skype=skname, designation=desg, department=dept,
+            website=wbsite, user=u
+        )
 
-            # select=request.POST.get('pterms')
-            # pterms=payment_terms.objects.get(id=select)
-            # pterms=request.POST.get('pterms')
+        ctmr.save()
 
-            # plst=request.POST.get('plst')
-            # plang=request.POST.get('plang')
-            # fbk=request.POST.get('fbk')
-            # twtr=request.POST.get('twtr')
-        
-            # atn=request.POST.get('atn')
-            # ctry=request.POST.get('ctry')
-            
-            # addrs=request.POST.get('addrs')
-            # addrs1=request.POST.get('addrs1')
-            # bct=request.POST.get('bct')
-            # bst=request.POST.get('bst')
-            # bzip=request.POST.get('bzip')
-            # bpon=request.POST.get('bpon')
-            # bfx=request.POST.get('bfx')
+        return redirect('save_expense')
 
-            # sal=request.POST.get('sal')
-            # ftname=request.POST.get('ftname')
-            # ltname=request.POST.get('ltname')
-            # mail=request.POST.get('mail')
-            # bworkpn=request.POST.get('bworkpn')
-            # bmobile=request.POST.get('bmobile')
+    return render(request, 'addcustomer.html', {'customer': customer})
 
-            # bskype=request.POST.get('bskype')
-            # bdesg=request.POST.get('bdesg')
-            # bdept=request.POST.get('bdept')
-            u = User.objects.get(id = request.user.id)
 
-            ctmr=addcustomer(customerName=txtFullName,customerType=type,
-                        companyName=cpname,customerEmail=email,customerWorkPhone=wphone,
-                         customerMobile=mobile,skype=skname,designation=desg,department=dept,
-             website=wbsite,user=u )
-            
-            customer_names = addcustomer.objects.values_list('customerName', flat=True)
-            ctmr.save()  
-           
+# def entr_custmr(request):
+#     if request.method == 'POST':
+#         type = request.POST.get('type')
+#         txtFullName = request.POST['txtFullName']
+#         cpname = request.POST['cpname']
+#         email = request.POST.get('myEmail')
+#         wphone = request.POST.get('wphone')
+#         mobile = request.POST.get('mobile')
+#         skname = request.POST.get('skname')
+#         desg = request.POST.get('desg')
+#         dept = request.POST.get('dept')
+#         wbsite = request.POST.get('wbsite')
+#         u = User.objects.get(id=request.user.id)
 
-            
-            return redirect("save_expense")
-        return render(request,'addcustomer.html', {
-              'customer_names': customer_names,
-             })
+#         ctmr = addcustomer(customerName=txtFullName, customerType=type,
+#                            companyName=cpname, customerEmail=email, customerWorkPhone=wphone,
+#                            customerMobile=mobile, skype=skname, designation=desg, department=dept,
+#                            website=wbsite, user=u)
+
+#         ctmr.save()
+#         customer = addcustomer.objects.all()
+#         customername = set(addcustomer.objects.values_list('txtFullName', flat=True))
+
+#         return redirect('save_expense')
+
+#     return render(request, 'addcustomer.html' ,{'customer':customer,'customername':customername})
+
+# def add_cust(request):
+#     customer=addcustomer.objects.all()   
+#     context={'customers':customer,}    
+#     return render(request,'addexpense.html',context)
+
+
 def payment_term(request):
     if request.method=='POST':
         term=request.POST.get('term')

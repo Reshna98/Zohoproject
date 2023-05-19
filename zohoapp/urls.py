@@ -19,6 +19,7 @@ urlpatterns = [
     path('Action/<int:id>',views.Action,name='Action'),
     path('cleer/<int:id>',views.cleer,name='cleer'),
     path('add_unit',views.add_unit,name='add_unit'),
+    # path('add_cust',views.add_cust,name='add_cust'),
     path('sales',views.add_sales,name='add_sales'),
     path('expensepage',views.expensepage,name='expensepage'),
     path('save_expense',views.save_expense,name='save_expense'),
@@ -27,5 +28,5 @@ urlpatterns = [
     path('payment_term',views.payment_term,name='payment_term'),
     path('expense_details/<int:pk>',views.expense_details,name='expense_details'),
     path('edit_expense/<int:pk>',views.edit_expense,name='edit_expense'),
-    
+  
 ]
