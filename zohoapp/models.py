@@ -82,7 +82,7 @@ class payment_terms(models.Model):
     Days=models.IntegerField(null=True,blank=True)  
 class addcustomer(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
-    customerName= models.CharField(max_length=100,null=True,blank=True)
+    customer_name= models.CharField(max_length=100,null=True,blank=True)
     customerType= models.CharField(max_length=100,null=True,blank=True)
     companyName= models.CharField(max_length=100,null=True,blank=True)
     customerEmail= models.CharField(max_length=100,null=True,blank=True)

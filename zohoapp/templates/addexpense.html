@@ -286,7 +286,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="customer_id" class="col-sm-2 col-form-label">Customer</label>
+          <label  class="col-sm-2 col-form-label">Customer</label>
           <div class="col-sm-10">
             <!-- <select class="form-control form-select" id="select" name="select" onclick="handleSelectChange(this);" required>
               <option hidden disabled selected value="">Select Customer</option>
@@ -310,15 +310,22 @@
                   }
               }
           </script> -->
-          <select class="form-control form-select" id="customer_id" name="customer_id" onchange="handleSelectChange(this);" required>
+          <!-- <select class="form-control form-select" id="customer_id" name="customer_id" onchange="handleSelectChange(this);" required>
             <option hidden disabled selected value="">Select Customer</option>
            
-            {% for customer_id, customer_name in customers %}
+            {% for customer_id, customer_name in customer %}
             
               <option value="{{ customer_id }}">{{ customer_name }}</option>
             {% endfor %}
             <option value="new" style="color: blue;">+ New Customer</option>
-          </select>
+          </select> -->
+          <select class="form-control form-select" id="customer_id" name="customer_id" onchange="handleSelectChange(this);" required>
+            <option hidden disabled selected value="">Select Customer</option>
+            {% for customer_id, customer_name in c %}
+                <option value="{{ customer_id }}">{{ customer_name }}</option>
+            {% endfor %}
+            <option value="new" style="color: blue;">+ New Customer</option>
+        </select>
         
         <script>
             function handleSelectChange(select) {

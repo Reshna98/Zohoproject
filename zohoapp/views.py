@@ -408,6 +408,10 @@ def save_expense(request):
         return redirect('expensepage')  
     
     return render(request, 'addexpense.html') 
+# def add_cus(request):
+#     customer=addcustomer.objects.all()   
+#     context={'customer':customer}    
+#     return render(request,'addexpense.html',context)
 
 def add_accountE(request):
     accounts = Account.objects.all()
@@ -476,12 +480,14 @@ def edit_expense(request, pk):
     }
     return render(request, 'editexpense.html', context)
 def entr_custmr(request):
-    # customer = addcustomer.objects.all()
+    c= addcustomer.objects.all()
     # customername = set(addcustomer.objects.values_list('customerName', flat=True))
-    customer= addcustomer.objects.values_list('id', 'customerName')
+    # customer= addcustomer.objects.values_list('id', 'customer_name')
     if request.method == 'POST':
         type = request.POST.get('type')
+        # customer_name= request.POST['customer_name']
         txtFullName = request.POST['txtFullName']
+
         cpname = request.POST['cpname']
         email = request.POST.get('myEmail')
         wphone = request.POST.get('wphone')
@@ -493,17 +499,18 @@ def entr_custmr(request):
         u = User.objects.get(id=request.user.id)
 
         ctmr = addcustomer(
-            customerName=txtFullName, customerType=type,
+            customer_name=txtFullName, customerType=type,
             companyName=cpname, customerEmail=email, customerWorkPhone=wphone,
             customerMobile=mobile, skype=skname, designation=desg, department=dept,
             website=wbsite, user=u
         )
 
         ctmr.save()
+        print(customer)
 
         return redirect('save_expense')
 
-    return render(request, 'addcustomer.html', {'customer': customer})
+    return render(request, 'addcustomer.html', {'customer': customer,'c':c})
 
 
 # def entr_custmr(request):
@@ -533,10 +540,10 @@ def entr_custmr(request):
 
 #     return render(request, 'addcustomer.html' ,{'customer':customer,'customername':customername})
 
-# def add_cust(request):
-#     customer=addcustomer.objects.all()   
-#     context={'customers':customer,}    
-#     return render(request,'addexpense.html',context)
+def add_cus(request):
+    customer=addcustomer.objects.all()   
+    context={'customer':customer,}    
+    return render(request,'addexpense.html',context)
 
 
 def payment_term(request):
